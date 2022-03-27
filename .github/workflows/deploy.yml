@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Clone repository
         uses: actions/checkout@v2
+        with:
+          submodules: true
 
       # TODO(jordanreger): add a build step here
 
