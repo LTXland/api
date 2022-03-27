@@ -1,0 +1,3 @@
+[submodule "launches"]
+	path = launches
+	url = https://github.com/LTXland/launches
