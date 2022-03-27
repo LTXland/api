@@ -2,11 +2,12 @@ import { parse, stringify } from "https://deno.land/std@0.132.0/encoding/toml.ts
 
 const decoder = new TextDecoder("utf-8");
 
-export const list = () => {
+export const list = async () => {
     let temp: Array<any> = [];
-    for(const file of Deno.readDirSync("./launches")){
+    Deno.readDir("./launches");
+    for await (const file of Deno.readDir("/launches")){
         if(file.name !== ".git") {
-            const launch = decoder.decode(Deno.readFileSync(`./launches/${file.name}`));
+            const launch = decoder.decode(await Deno.readFile(`./launches/${file.name}`));
             temp.push(parse(launch));
         }
     }
