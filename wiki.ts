@@ -4,6 +4,11 @@ const decoder = new TextDecoder("utf-8");
 
 export const get = async (src: string) => {
     src = src.replaceAll(".md", "");
-    const launch = Marked.parse(decoder.decode(await Deno.readFile(`./wiki/${src}.md`))).content;
+    let launch;
+    try {
+        launch = Marked.parse(decoder.decode(await Deno.readFile(`./wiki/${src}.md`))).content;
+    } catch(error) {
+        launch = Marked.parse(decoder.decode(await Deno.readFile(`./wiki/404.md`))).content;
+    }
     return launch
 }
