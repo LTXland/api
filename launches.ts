@@ -5,7 +5,7 @@ const decoder = new TextDecoder("utf-8");
 export const list = async () => {
     let temp: Array<any> = [];
     Deno.readDir("./launches");
-    for await (const file of Deno.readDir("/launches")){
+    for await (const file of Deno.readDir("./launches")){
         if(file.name !== ".git") {
             const launch = decoder.decode(await Deno.readFile(`./launches/${file.name}`));
             temp.push(parse(launch));
