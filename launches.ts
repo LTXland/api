@@ -6,7 +6,7 @@ export const list = async () => {
     let temp: Array<any> = [];
     Deno.readDir("./launches");
     for await (const file of Deno.readDir("./launches")){
-        if(file.name !== ".git") {
+        if(file.name !== ".git" && !file.isDirectory) {
             const launch = decoder.decode(await Deno.readFile(`./launches/${file.name}`));
             temp.push(parse(launch));
         }
