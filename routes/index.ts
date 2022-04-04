@@ -2,7 +2,7 @@ export const main = async () => {
     const json = {
         "dev": {
             "sha": await fetch("https://api.github.com/repos/LTXland/ltx/commits").then(res => res.json()).then((res) => { return res[0].sha }),
-            "id": Deno.env.get("DENO_DEPLOYMENT_ID") ? `https://ltx-${Deno.env.get("DENO_DEPLOYMENT_ID")}.deno.dev` : "dev",
+            "id": Deno.env.get("DENO_DEPLOYMENT_ID") ? `https://api-ltx-${Deno.env.get("DENO_DEPLOYMENT_ID")}.deno.dev` : "dev",
             "deployment_region": Deno.env.get("DENO_REGION") ? Deno.env.get("DENO_REGION") : "local"
         },
 
