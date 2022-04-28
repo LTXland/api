@@ -1,8 +1,9 @@
-import { parse, stringify } from "https://deno.land/std@0.132.0/encoding/toml.ts";
+import { parse } from "https://deno.land/std@0.132.0/encoding/toml.ts";
 
 const decoder = new TextDecoder("utf-8");
 
 export const list = async () => {
+    // deno-lint-ignore no-explicit-any
     let launches: Array<any> = [];
     Deno.readDir("./launches");
     for await (const file of Deno.readDir("./launches")){

@@ -17,7 +17,6 @@ export const main = async () => {
         "links": {
             "github": "https://github.com/LTXland",
             "discord": "https://discord.gg/Zma3aV9Zdm",
-            "twitter": "https://twitter.com/LTXland"
         }
     }
 

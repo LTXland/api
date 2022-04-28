@@ -17,8 +17,11 @@ async function handler(req: Request): Promise<Response> {
     case '/':
       tr = true, rb = await main(), ct = "application/json";
       break;
+    
+    case '/html':
+      tr = false, rb = "https://ltx.land";
+      break;
 
-    // launches
     case '/launches':
       tr = true, rb = await launches.list(), ct = "application/json";
       break;
@@ -34,7 +37,14 @@ async function handler(req: Request): Promise<Response> {
       const article = path.replace("/wiki/", "");
       tr = true, rb = await wiki.get(article), ct = "text/html; charset=UTF-8";
       break;
+
+    case '/github':
+      tr = false, rb = "https://github.com/LTXland";
+      break;
     
+    case '/discord':
+      tr = false, rb = "https://discord.gg/Zma3aV9Zdm";
+      break;
     
     default:
       tr = true, rb = "not found", ct = "text/plain";

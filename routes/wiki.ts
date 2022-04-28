@@ -3,7 +3,8 @@ import { Marked } from "https://deno.land/x/markdown@v2.0.0/mod.ts";
 const decoder = new TextDecoder("utf-8");
 
 export const list = async () => {
-    let articles: Array<any> = [];
+    // deno-lint-ignore no-explicit-any
+    const articles: Array<any> = [];
     Deno.readDir("./wiki");
     for await (const file of Deno.readDir("./wiki")){
         if(file.name !== ".git" && file.name !== "streams.json" && !file.isDirectory) {
@@ -18,7 +19,7 @@ export const get = async (src: string) => {
     let article;
     try {
         article = Marked.parse(decoder.decode(await Deno.readFile(`./wiki/${src}.md`))).content;
-    } catch(error) {
+    } catch(_) {
         article = Marked.parse(decoder.decode(await Deno.readFile(`./wiki/404.md`))).content;
     }
     return article
