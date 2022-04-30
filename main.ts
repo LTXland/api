@@ -6,58 +6,56 @@ import * as launches from "./routes/launches.ts";
 import * as wiki from "./routes/wiki.ts";
 import * as streams from "./routes/streams.ts";
 
-async function handler(req: Request): Promise<Response> {
-  const url = new URL(req.url);
+async function handler(request: Request): Promise<Response> {
+  const url = new URL(request.url);
   const path = url.pathname, _params = new URLSearchParams(url.search);
   const route = (route:string) => { const regexRoute = new RegExp(route, "gmi"); if(regexRoute.test(path)){ return path }}
 
-  let tr, rb, ct = "";
+  let response, response_body, content_type = "";
 
   switch(path){
     case '/':
-      tr = true, rb = await main(), ct = "application/json";
+      response = true, response_body = await main(), content_type = "application/json";
       break;
     
     case '/html':
-      tr = false, rb = "https://ltx.land";
+      response = false, response_body = "https://ltx.land";
       break;
 
     case '/launches':
-      tr = true, rb = await launches.list(), ct = "application/json";
+      response = true, response_body = await launches.list(), content_type = "application/json";
       break;
 
     case '/streams':
-      tr = true, rb = await streams.list(), ct = "application/json";
+      response = true, response_body = await streams.list(), content_type = "application/json";
       break;
     
     case '/wiki':
-      tr = true, rb = await wiki.list(), ct = "application/json";
+      response = true, response_body = await wiki.list(), content_type = "application/json";
       break;
     case route('/wiki/.'):
       const article = path.replace("/wiki/", "");
-      tr = true, rb = await wiki.get(article), ct = "text/html; charset=UTF-8";
+      response = true, response_body = await wiki.get(article), content_type = "text/html; charset=UTF-8";
       break;
 
     case '/github':
-      tr = false, rb = "https://github.com/LTXland";
+      response = false, response_body = "https://github.com/LTXland";
       break;
     
     case '/discord':
-      tr = false, rb = "https://discord.gg/Zma3aV9Zdm";
+      response = false, response_body = "https://discord.gg/Zma3aV9Zdm";
       break;
     
     default:
-      tr = true, rb = "not found", ct = "text/plain";
+      response = true, response_body = "not found", content_type = "text/plain";
   }
 
-  let res;
-
-  if(tr){
-    res = new Response(rb, { headers: { "content-type": ct } });
+  if(response){
+    response = new Response(response_body, { headers: { "content-type": content_type } });
   } else {
-    res = Response.redirect(rb, 302);
+    response = Response.redirect(response_body, 302);
   }
-  return res!;
+  return response!;
 }
 
 await serve(handler);
